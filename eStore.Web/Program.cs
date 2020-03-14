@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using eStore.Infrastructure.Identity.Context;
 using eStore.Infrastructure.Identity.Models;
+using eStore.Infrastructure.Persistence.Context;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +30,9 @@ namespace eStore.Web
                     context.Database.Migrate();
                     var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
                     await IdentityContextSeed.SeedAsync(userManager);
+
+                    var applicationContext = services.GetRequiredService<ApplicationDbContext>();
+                    await ApplicationDbContextSeed.SeedAsync(applicationContext);
                 }
                 catch (Exception ex)
                 {
