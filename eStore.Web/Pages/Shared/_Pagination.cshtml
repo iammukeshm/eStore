@@ -1,0 +1,62 @@
+﻿@model eStore.Application.Features.Common.ViewModels.PaginationInfoViewModel
+
+@*<div class="esh-pager">
+    <div class="container-fluid">
+        <article class="esh-pager-wrapper row">
+            <nav>
+                <div class="col-md-2 col-xs-12">
+                    <a class="esh-pager-item-left esh-pager-item--navigable esh-pager-item @Model.Previous"
+                       id="Previous"
+                       asp-route-pageid="@(Model.ActualPage - 1)"
+                       aria-label="Previous">
+                        Previous
+                    </a>
+                </div>
+
+                <div class="col-md-8 col-xs-12">
+                    <span class="esh-pager-item">
+                        Showing @Model.ItemsPerPage of @Model.TotalItems products - Page @(Model.ActualPage + 1) - @Model.TotalPages
+                    </span>
+                </div>
+
+                <div class="col-md-2 col-xs-12">
+                    <a class="esh-pager-item-right esh-pager-item--navigable esh-pager-item @Model.Next"
+                       id="Next"
+                       asp-route-pageid="@(Model.ActualPage + 1)"
+                       aria-label="Next">
+                        Next
+                    </a>
+                </div>
+            </nav>
+        </article>
+    </div>
+</div>*@
+
+<nav class="blog-pagination justify-content-center d-flex">
+    <ul class="pagination">
+        <li class="page-item">
+            <a id="Previous" asp-route-pageid="@(Model.ActualPage - 1)" aria-label="Previous" class="page-link">
+                <span aria-hidden="true">
+                    <span class="ti-arrow-left"></span>
+                </span>
+            </a>
+        </li>
+        @for (int i = 1; i<=@Model.TotalPages;i++)
+        {
+            <li class="page-item">
+                <a asp-route-pageid="@(i-1)" class="page-link">@i</a>
+            </li>
+        }
+
+        <li class="page-item">
+            <a id="Next"
+               asp-route-pageid="@(Model.ActualPage + 1)"
+               aria-label="Next" class="page-link">
+                <span aria-hidden="true">
+                    <span class="ti-arrow-right"></span>
+                </span>
+            </a>
+        </li>
+    </ul>
+</nav>
+

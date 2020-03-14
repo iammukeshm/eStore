@@ -21,14 +21,16 @@ namespace eStore.Web.Pages.Shop
         {
             _mediator = mediator;
         }
-        public async Task OnGet()
-        {
-            await SetShopModelAsync();
-        }
         public ShopViewModel ShopModel { get; set; } = new ShopViewModel();
-        private async Task SetShopModelAsync()
+        public async Task OnGet(ShopViewModel shopModel, int? pageId)
         {
-            var result = await _mediator.Send(new GetShopModelQuery() { itemsPage = 10, pageIndex = 0});
+            var result = await _mediator.Send(new GetShopModelQuery() 
+            { 
+                itemsPage = 10, 
+                pageIndex = pageId ?? 0 ,
+                brandId = shopModel.BrandFilterApplied,
+                typeId = shopModel.TypesFilterApplied
+            });
 
             if (result.Succeeded)
             {
@@ -39,5 +41,6 @@ namespace eStore.Web.Pages.Shop
                 ShopModel = new ShopViewModel();
             }
         }
+        
     }
 }
