@@ -36,7 +36,8 @@ namespace eStore.Web
             services.Configure<EmailSettings>(_configuration.GetSection("Email"));
             services.Configure<ClientAppSettings>(_configuration.GetSection("ClientApp"));
             services.Configure<JwtSecurityTokenSettings>(_configuration.GetSection("JwtSecurityToken"));
-
+            services.Configure<CatalogSettings>(_configuration.GetSection("CatalogSettings"));
+            services.AddSingleton<IUriComposer>(new UriComposer(_configuration.Get<CatalogSettings>()));
             services.AddApplication();
 
             //DI for Infrastructure.Persitence

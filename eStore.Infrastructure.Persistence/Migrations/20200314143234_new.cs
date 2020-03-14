@@ -1,33 +1,23 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace eStore.Infrastructure.Persistence.Migrations
 {
-    public partial class addedCatalogEntities : Migration
+    public partial class @new : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_CartItem_Carts_CartId",
-                table: "CartItem");
-
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_CartItem",
-                table: "CartItem");
-
-            migrationBuilder.RenameTable(
-                name: "CartItem",
-                newName: "CartItems");
-
-            migrationBuilder.RenameIndex(
-                name: "IX_CartItem_CartId",
-                table: "CartItems",
-                newName: "IX_CartItems_CartId");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_CartItems",
-                table: "CartItems",
-                column: "Id");
+            migrationBuilder.CreateTable(
+                name: "Carts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BuyerId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Carts", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "CatalogBrands",
@@ -35,10 +25,6 @@ namespace eStore.Infrastructure.Persistence.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedBy = table.Column<string>(nullable: true),
-                    Created = table.Column<DateTime>(nullable: false),
-                    LastModifiedBy = table.Column<string>(nullable: true),
-                    LastModified = table.Column<DateTime>(nullable: true),
                     Brand = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -52,10 +38,6 @@ namespace eStore.Infrastructure.Persistence.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedBy = table.Column<string>(nullable: true),
-                    Created = table.Column<DateTime>(nullable: false),
-                    LastModifiedBy = table.Column<string>(nullable: true),
-                    LastModified = table.Column<DateTime>(nullable: true),
                     Type = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -64,15 +46,33 @@ namespace eStore.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CartItems",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UnitPrice = table.Column<decimal>(nullable: false),
+                    Quantity = table.Column<int>(nullable: false),
+                    CatalogItemId = table.Column<int>(nullable: false),
+                    CartId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CartItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CartItems_Carts_CartId",
+                        column: x => x.CartId,
+                        principalTable: "Carts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CatalogItems",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedBy = table.Column<string>(nullable: true),
-                    Created = table.Column<DateTime>(nullable: false),
-                    LastModifiedBy = table.Column<string>(nullable: true),
-                    LastModified = table.Column<DateTime>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     Price = table.Column<decimal>(nullable: false),
@@ -98,6 +98,11 @@ namespace eStore.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_CartItems_CartId",
+                table: "CartItems",
+                column: "CartId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CatalogItems_CatalogBrandId",
                 table: "CatalogItems",
                 column: "CatalogBrandId");
@@ -106,56 +111,24 @@ namespace eStore.Infrastructure.Persistence.Migrations
                 name: "IX_CatalogItems_CatalogTypeId",
                 table: "CatalogItems",
                 column: "CatalogTypeId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_CartItems_Carts_CartId",
-                table: "CartItems",
-                column: "CartId",
-                principalTable: "Carts",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_CartItems_Carts_CartId",
-                table: "CartItems");
+            migrationBuilder.DropTable(
+                name: "CartItems");
 
             migrationBuilder.DropTable(
                 name: "CatalogItems");
+
+            migrationBuilder.DropTable(
+                name: "Carts");
 
             migrationBuilder.DropTable(
                 name: "CatalogBrands");
 
             migrationBuilder.DropTable(
                 name: "CatalogTypes");
-
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_CartItems",
-                table: "CartItems");
-
-            migrationBuilder.RenameTable(
-                name: "CartItems",
-                newName: "CartItem");
-
-            migrationBuilder.RenameIndex(
-                name: "IX_CartItems_CartId",
-                table: "CartItem",
-                newName: "IX_CartItem_CartId");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_CartItem",
-                table: "CartItem",
-                column: "Id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_CartItem_Carts_CartId",
-                table: "CartItem",
-                column: "CartId",
-                principalTable: "Carts",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
         }
     }
 }

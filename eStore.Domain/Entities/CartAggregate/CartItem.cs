@@ -6,7 +6,6 @@ namespace eStore.Domain.Entities.CartAggregate
 {
     public class CartItem : BaseEntity
     {
-        public int Id { get; set; }
         public decimal UnitPrice { get; private set; }
         public int Quantity { get; private set; }
         public int CatalogItemId { get; private set; }

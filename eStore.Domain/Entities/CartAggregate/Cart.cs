@@ -8,7 +8,6 @@ namespace eStore.Domain.Entities.CartAggregate
 {
     public class Cart : BaseEntity, IAggregateRoot
     {
-        public int Id { get; set; }
         public string BuyerId { get; set; }
         private List<CartItem> _items { get; set; }
         public IReadOnlyCollection<CartItem> Items => _items.AsReadOnly();

@@ -10,8 +10,8 @@ using eStore.Infrastructure.Identity.Context;
 namespace eStore.Infrastructure.Identity.Migrations
 {
     [DbContext(typeof(IdentityContext))]
-    [Migration("20200311182843_initial")]
-    partial class initial
+    [Migration("20200314143029_added1")]
+    partial class added1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

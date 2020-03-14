@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace eStore.Infrastructure.Identity.Migrations
 {
-    public partial class initial : Migration
+    public partial class added1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

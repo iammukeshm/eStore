@@ -7,7 +7,6 @@ namespace eStore.Domain.Entities.Catalog
 {
     public class CatalogType : BaseEntity, IAggregateRoot
     {
-        public int Id { get; set; }
         public string Type { get; private set; }
         public CatalogType(string type)
         {
