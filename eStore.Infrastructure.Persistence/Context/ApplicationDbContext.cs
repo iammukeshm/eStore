@@ -1,6 +1,7 @@
 ﻿using eStore.Application.Interfaces;
 using eStore.Domain.Entities;
 using eStore.Domain.Entities.CartAggregate;
+using eStore.Domain.Entities.Catalog;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,10 @@ namespace eStore.Infrastructure.Persistence.Context
         }
 
         public DbSet<Cart> Carts { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
+        public DbSet<CatalogItem> CatalogItems { get; set; }
+        public DbSet<CatalogBrand> CatalogBrands { get; set; }
+        public DbSet<CatalogType> CatalogTypes { get; set; }
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             foreach (var entry in ChangeTracker.Entries<BaseEntity>())
