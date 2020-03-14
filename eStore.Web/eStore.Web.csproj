@@ -5,6 +5,11 @@
     <UserSecretsId>aspnet-eStore.Web-539966AD-9DA8-4C2F-BD00-7D9E299D64F8</UserSecretsId>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>C:\Users\iammu\source\repos\eStore\eStore.Web\eStore.Api.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Include="wwwroot\js\site.js" />
   </ItemGroup>
@@ -49,6 +54,7 @@
   <ItemGroup>
     <ProjectReference Include="..\eStore.Application\eStore.Application.csproj" />
     <ProjectReference Include="..\eStore.Infrastructure.Identity\eStore.Infrastructure.Identity.csproj" />
+    <ProjectReference Include="..\eStore.Infrastructure.Persistence\eStore.Infrastructure.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

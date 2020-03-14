@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using NToastNotify;
 
 namespace eStore.Web.Areas.Identity.Pages.Account
 {
@@ -16,17 +17,19 @@ namespace eStore.Web.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LogoutModel> _logger;
-
-        public LogoutModel(SignInManager<ApplicationUser> signInManager, ILogger<LogoutModel> logger)
+        private readonly IToastNotification _toastNotification;
+        public LogoutModel(SignInManager<ApplicationUser> signInManager, ILogger<LogoutModel> logger, IToastNotification toastNotification)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _toastNotification = toastNotification;
         }
 
         public async Task<IActionResult> OnGet(string returnUrl = null)
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
+            _toastNotification.AddInfoToastMessage("Logged Out!");
             if (returnUrl != null)
             {
                 return LocalRedirect(returnUrl);

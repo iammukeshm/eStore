@@ -29,7 +29,7 @@ namespace eStore.Infrastructure.Identity
             // Identity
             services.AddDbContext<IdentityContext>(options =>
                 options.UseSqlServer(
-                    configuration.GetConnectionString("DefaultConnection"),
+                    configuration.GetConnectionString("Identity"),
                     b => b.MigrationsAssembly(typeof(IdentityContext).Assembly.FullName)));
 
 

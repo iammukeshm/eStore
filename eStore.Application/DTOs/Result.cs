@@ -22,10 +22,13 @@ namespace eStore.Application.DTOs
         {
             return new Result<T>(true, new string[] { message }, data);
         }
-
-        public static Result<T> Failure(IEnumerable<string> errors, T data)
+        public static Result<T> Success(T data)
         {
-            return new Result<T>(false, errors, data);
+            return new Result<T>(true, new string[] { "Success" }, data);
+        }
+        public static Result<T> Failure(IEnumerable<string> errors)
+        {
+            return new Result<T>(false, errors,default);
         }
     }
 }

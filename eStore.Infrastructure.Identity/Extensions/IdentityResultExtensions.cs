@@ -13,7 +13,7 @@ namespace eStore.Infrastructure.Identity.Extensions
         {
             return result.Succeeded
                 ? Result<string>.Success(message, data)
-                : Result<string>.Failure(result.Errors.Select(e => e.Description), null);
+                : Result<string>.Failure(result.Errors.Select(e => e.Description));
         }
     }
 }

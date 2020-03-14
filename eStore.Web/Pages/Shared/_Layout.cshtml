@@ -17,6 +17,23 @@
     <!-- main css -->
     <link rel="stylesheet" href="~/css/style.css" />
     <link rel="stylesheet" href="~/css/responsive.css" />
+    <style>
+        #ex4 .p1[data-count]:after {
+            position: absolute;
+            right: 10%;
+            top: 8%;
+            content: attr(data-count);
+            font-size: 40%;
+            padding: .2em;
+            border-radius: 50%;
+            line-height: 1em;
+            color: white;
+            background: rgba(255,0,0,.85);
+            text-align: center;
+            min-width: 1em;
+            //font-weight:bold;
+        }
+    </style>
 </head>
 <body>
     @await Component.InvokeAsync("NToastNotify")
@@ -49,59 +66,8 @@
                                     <li class="nav-item">
                                         <a class="nav-link" asp-area="" asp-page="/Index">Home</a>
                                     </li>
-                                    <li class="nav-item submenu dropdown">
-                                        <a href="#"
-                                           class="nav-link dropdown-toggle"
-                                           data-toggle="dropdown"
-                                           role="button"
-                                           aria-haspopup="true"
-                                           aria-expanded="false">Shop</a>
-                                        <ul class="dropdown-menu">
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="category.html">Shop Category</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="single-product.html">Product Details</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="checkout.html">Product Checkout</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="cart.html">Shopping Cart</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class="nav-item submenu dropdown">
-                                        <a href="#"
-                                           class="nav-link dropdown-toggle"
-                                           data-toggle="dropdown"
-                                           role="button"
-                                           aria-haspopup="true"
-                                           aria-expanded="false">Blog</a>
-                                        <ul class="dropdown-menu">
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="blog.html">Blog</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="single-blog.html">Blog Details</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class="nav-item active submenu dropdown">
-                                        <a href="#"
-                                           class="nav-link dropdown-toggle"
-                                           data-toggle="dropdown"
-                                           role="button"
-                                           aria-haspopup="true"
-                                           aria-expanded="false">Pages</a>
-                                        <ul class="dropdown-menu">
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="tracking.html">Tracking</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="elements.html">Elements</a>
-                                            </li>
-                                        </ul>
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-area="" asp-page="/Shop/Index">Shop</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="contact.html">Contact</a>
@@ -111,15 +77,15 @@
 
                             <div class="col-lg-5 pr-0">
                                 <ul class="nav navbar-nav navbar-right right_nav pull-right">
-                                    <li class="nav-item">
+                                    @*<li class="nav-item">
                                         <a href="#" class="icons">
                                             <i class="ti-search" aria-hidden="true"></i>
                                         </a>
-                                    </li>
+                                    </li>*@
 
                                     <li class="nav-item">
-                                        <a href="#" class="icons">
-                                            <i class="ti-shopping-cart"></i>
+                                        <a class="icons" asp-area="" asp-page="/Cart/Index">
+                                            <i class="ti-shopping-cart" aria-hidden="true"></i><small> Cart </small><span class="badge badge-success">9</span>
                                         </a>
                                     </li>
                                     <partial name="_LoginPartial" />

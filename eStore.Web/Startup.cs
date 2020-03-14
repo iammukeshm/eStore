@@ -11,6 +11,9 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using NToastNotify;
+using eStore.Infrastructure.Persistence;
+using eStore.Web.Services;
+using eStore.Application.Interfaces;
 
 namespace eStore.Web
 {
@@ -38,7 +41,10 @@ namespace eStore.Web
 
             //DI for Infrastructure.Persitence
             services.ConfigureIdentity(_configuration, _environment);
-            //services.AddScoped<ICurrentUserService, CurrentUserService>();
+            services.ConfigureApplicationPersistence(_configuration, _environment);
+
+
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
 
             //Hangfire
             ///services.AddHangfireService(Configuration, Environment);
@@ -59,10 +65,62 @@ namespace eStore.Web
 
             services.AddHttpContextAccessor();
 
-              services.AddHealthChecks();
+            services.AddHealthChecks();
 
-            
 
+            // Register the Swagger generator, defining 1 or more Swagger documents
+            services.AddSwaggerGen(c =>
+            {
+                c.IncludeXmlComments(string.Format(@"{0}\eStore.Api.xml", System.AppDomain.CurrentDomain.BaseDirectory));
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "eStore WebApi",
+                    Description = "ASP.NET Core 3.1 Web API",
+                    TermsOfService = new Uri("https://example.com/terms"),
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Mukesh Murugan",
+                        Email = "iammukeshm@gmail.com",
+                        Url = new Uri("https://mukeshmurugan.com/contact"),
+                    },
+                    License = new OpenApiLicense
+                    {
+                        Name = "Use under LICX",
+                        Url = new Uri("https://example.com/license"),
+                    }
+                });
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = @"JWT Authorization header using the Bearer scheme. \r\n\r\n 
+                      Enter 'Bearer' [space] and then your token in the text input below.
+                      \r\n\r\nExample: 'Bearer 12345abcdef'",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer"
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+      {
+        {
+          new OpenApiSecurityScheme
+          {
+            Reference = new OpenApiReference
+              {
+                Type = ReferenceType.SecurityScheme,
+                Id = "Bearer"
+              },
+              Scheme = "oauth2",
+              Name = "Bearer",
+              In = ParameterLocation.Header,
+
+            },
+            new List<string>()
+          }
+        });
+
+            });
             // Add API Versioning to the Project
             services.AddApiVersioning(config =>
             {
@@ -75,7 +133,7 @@ namespace eStore.Web
             });
             services.AddRazorPages();
             services.AddControllers();
-            
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -103,9 +161,21 @@ namespace eStore.Web
             app.UseAuthorization();
             //NOTE this line must be above .UseMvc() line.
             app.UseNToastNotify();
+
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "PointOfSales WebApi V1");
+            });
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllers();
                 endpoints.MapRazorPages();
+                endpoints.MapHealthChecks("api_health_check");
             });
         }
     }
