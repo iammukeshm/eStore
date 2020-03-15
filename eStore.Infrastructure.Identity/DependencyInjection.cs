@@ -1,9 +1,7 @@
 ﻿using eStore.Application.Interfaces;
 using eStore.Infrastructure.Identity.Context;
-using eStore.Infrastructure.Identity.Helpers;
 using eStore.Infrastructure.Identity.Models;
 using eStore.Infrastructure.Identity.Services;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -12,10 +10,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.AspNetCore.Identity;
-using System.Threading.Tasks;
 
 namespace eStore.Infrastructure.Identity
 {
