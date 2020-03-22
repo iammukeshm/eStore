@@ -78,16 +78,20 @@
                             <div class="col-lg-5 pr-0">
                                 <ul class="nav navbar-nav navbar-right right_nav pull-right">
                                     @*<li class="nav-item">
-                                        <a href="#" class="icons">
-                                            <i class="ti-search" aria-hidden="true"></i>
-                                        </a>
-                                    </li>*@
+            <a href="#" class="icons">
+                <i class="ti-search" aria-hidden="true"></i>
+            </a>
+        </li>*@
+                                    @if (Context.User.Identity.IsAuthenticated)
+                                    {
+                                        @await Component.InvokeAsync("Cart", User.Identity.Name)
+                                    }
 
-                                    <li class="nav-item">
-                                        <a class="icons" asp-area="" asp-page="/Cart/Index">
-                                            <i class="ti-shopping-cart" aria-hidden="true"></i><small> Cart </small><span class="badge badge-success">9</span>
-                                        </a>
-                                    </li>
+                                    else
+                                    {
+                                        @await Component.InvokeAsync("Cart")
+                                    }
+
                                     <partial name="_LoginPartial" />
 
                                 </ul>

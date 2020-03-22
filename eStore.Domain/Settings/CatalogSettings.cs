@@ -8,6 +8,8 @@ namespace eStore.Domain.Settings
     {
         public string CatalogBaseUrl { get; set; }
 
+        public string CookieName { get; set; }
+
         public int ItemsPerPage { get; set; }
     }
 }

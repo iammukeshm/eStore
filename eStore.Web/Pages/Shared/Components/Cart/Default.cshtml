@@ -1,0 +1,11 @@
+﻿@model eStore.Application.Features.Cart.ViewModels.CartCountViewModel
+
+@{
+    ViewData["Title"] = "My Cart";
+}
+
+<li class="nav-item">
+    <a class="icons" asp-area="" asp-page="/Cart/Index">
+        <i class="ti-shopping-cart" aria-hidden="true"></i><small> Cart </small><span class="badge badge-success"> @Model.ItemsCount </span>
+    </a>
+</li>

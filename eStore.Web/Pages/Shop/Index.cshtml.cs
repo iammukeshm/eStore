@@ -19,18 +19,16 @@ namespace eStore.Web.Pages.Shop
     public class IndexModel : PageModel
     {
         private readonly IMediator _mediator;
-        private readonly CatalogSettings _catalogSettings;
-        public IndexModel(IMediator mediator, IOptions<CatalogSettings> catalogSettings)
+        public IndexModel(IMediator mediator)
         {
             _mediator = mediator;
-            _catalogSettings = catalogSettings.Value;
         }
         public ShopViewModel ShopModel { get; set; } = new ShopViewModel();
         public async Task OnGet(ShopViewModel shopModel, int? pageId)
         {
             var result = await _mediator.Send(new GetShopModelQuery() 
             { 
-                itemsPage = _catalogSettings.ItemsPerPage, 
+                itemsPage = Constants.ITEMS_PER_PAGE, 
                 pageIndex = pageId ?? 0 ,
                 brandId = shopModel.BrandFilterApplied,
                 typeId = shopModel.TypesFilterApplied
